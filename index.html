@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PAHAL — A Small Beginning Towards a Big Change</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@300;400;500;600&family=Caveat:wght@500;600&display=swap');
+
+  :root{
+    --ink:#202A44;
+    --ink-deep:#161E36;
+    --saffron:#E3A13C;
+    --saffron-soft:#F1C878;
+    --cream:#FBF7EF;
+    --cream-deep:#F3ECDD;
+    --rose:#D98B86;
+    --sage:#6B8F82;
+  }
+
+  html{ scroll-behavior:smooth; }
+  body{ background:var(--cream); color:var(--ink); font-family:'Work Sans',sans-serif; }
+  .font-display{ font-family:'Fraunces',serif; }
+  .font-hand{ font-family:'Caveat',cursive; }
+
+  ::selection{ background:var(--saffron); color:var(--ink-deep); }
+
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity .9s ease, transform .9s ease; }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+  .thread-line{
+    background:linear-gradient(to bottom, transparent 0%, var(--saffron) 8%, var(--saffron) 92%, transparent 100%);
+    width:2px;
+  }
+
+  .node-ring{
+    box-shadow:0 0 0 6px var(--cream), 0 0 0 8px rgba(227,161,60,0.35);
+  }
+
+  .glass{
+    background:rgba(251,247,239,0.10);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border:1px solid rgba(251,247,239,0.22);
+  }
+
+  .grain{
+    position:absolute; inset:0; pointer-events:none; opacity:0.05; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .underline-swipe{ position:relative; }
+  .underline-swipe::after{
+    content:''; position:absolute; left:0; bottom:-6px; height:3px; width:100%;
+    background:var(--saffron); transform:scaleX(0); transform-origin:left;
+    transition:transform .6s ease;
+  }
+  .underline-swipe.is-visible::after{ transform:scaleX(1); }
+
+  @keyframes floaty{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-8px);} }
+  .floaty{ animation:floaty 3.2s ease-in-out infinite; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .reveal{ transition:none; opacity:1; transform:none; }
+    .floaty{ animation:none; }
+  }
+
+  input:focus, button:focus{ outline:2px solid var(--saffron); outline-offset:2px; }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ================= HERO ================= -->
+<header class="relative min-h-[100svh] w-full overflow-hidden flex flex-col">
+  <div class="absolute inset-0">
+    <img src="poster.jpg" alt="" class="w-full h-full object-cover" />
+    <div class="absolute inset-0" style="background:linear-gradient(180deg, rgba(22,30,54,0.55) 0%, rgba(22,30,54,0.35) 35%, rgba(22,30,54,0.92) 100%);"></div>
+    <div class="grain"></div>
+  </div>
+
+  <div class="relative z-10 flex items-center justify-between px-6 sm:px-10 py-6">
+    <div class="flex items-center gap-3">
+      <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" stroke="#F1C878" stroke-width="1.4"/>
+        <path d="M20 8 L22.4 16.8 L31 20 L22.4 23.2 L20 32 L17.6 23.2 L9 20 L17.6 16.8 Z" fill="#E3A13C"/>
+      </svg>
+      <span class="text-cream/90 font-display tracking-wide text-sm sm:text-base">THE ROTARY CIRCLE</span>
+    </div>
+    <span class="hidden sm:block text-cream/60 text-xs tracking-[0.3em] uppercase">A Charity Chronicle · 2026</span>
+  </div>
+
+  <div class="relative z-10 flex-1 flex items-end px-6 sm:px-10 pb-16 sm:pb-24">
+    <div class="glass rounded-2xl sm:rounded-3xl px-6 sm:px-12 py-8 sm:py-12 max-w-3xl">
+      <p class="text-saffron-soft tracking-[0.35em] text-xs sm:text-sm uppercase mb-4" style="color:var(--saffron-soft)">A Social Charity Experiment</p>
+      <h1 class="font-display text-cream text-5xl sm:text-7xl lg:text-8xl leading-[0.95] mb-5" style="color:#FBF7EF;">
+        PAHAL
+      </h1>
+      <p class="font-display text-cream/90 text-xl sm:text-3xl italic mb-6" style="color:#EDE6D6;">
+        A small beginning towards a big change.
+      </p>
+      <p class="text-cream/70 text-sm sm:text-base leading-relaxed max-w-xl" style="color:#D8D2C4;">
+        One school. One day. A handful of hours we gave, and a lifetime of moments we received in return —
+        this is the story of the afternoon we stopped talking about kindness, and simply sat down to practice it.
+      </p>
+    </div>
+  </div>
+
+  <div class="relative z-10 flex justify-center pb-8">
+    <svg class="floaty" width="22" height="34" viewBox="0 0 22 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1" y="1" width="20" height="32" rx="10" stroke="#F1C878" stroke-opacity="0.8" stroke-width="1.4"/>
+      <circle cx="11" cy="10" r="2.4" fill="#F1C878"/>
+    </svg>
+  </div>
+</header>
+
+<!-- ================= MISSION ================= -->
+<section class="relative px-6 sm:px-10 lg:px-20 py-24 sm:py-32">
+  <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+    <div class="reveal">
+      <p class="tracking-[0.3em] text-xs uppercase mb-4" style="color:var(--rose)">The Why</p>
+      <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl leading-tight mb-6 underline-swipe inline-block">
+        Some days remind you<br class="hidden sm:block"/> why you began.
+      </h2>
+      <div class="space-y-5 text-[15px] sm:text-base leading-relaxed" style="color:#3B4560;">
+        <p>
+          It started as a quiet idea in a club meeting — a wish to move our conversations about giving back
+          from words into hours spent shoulder to shoulder with people who needed us to simply show up.
+        </p>
+        <p>
+          We found that place at a school built for specially-abled children, where every ordinary object —
+          a swing, a song, a shared crayon — carries an extraordinary kind of courage. We didn't arrive with
+          answers. We arrived with open hands, and left with something we didn't expect to receive: joy,
+          unfiltered and entirely theirs to give.
+        </p>
+        <p>
+          PAHAL, in its truest sense, means "an initiative" — a first step. We hope this was ours, and that
+          the ones who follow us keep walking further than we did.
+        </p>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/5] bg-[color:var(--cream-deep)] border border-black/5 flex items-center justify-center">
+        <svg width="72" height="72" viewBox="0 0 24 24" fill="none" style="opacity:0.25;">
+          <path d="M4 16.5C4 12 8 10.5 12 10.5C16 10.5 20 12 20 16.5" stroke="#202A44" stroke-width="1.2"/>
+          <circle cx="12" cy="6.5" r="3.2" stroke="#202A44" stroke-width="1.2"/>
+        </svg>
+        <span class="absolute bottom-4 right-5 text-xs tracking-widest uppercase" style="color:#9A927F;">Photo — coming soon</span>
+      </div>
+      <p class="font-hand text-2xl sm:text-3xl mt-6 pl-2" style="color:var(--ink);">
+        “We came to give a day. We left changed for good.”
+      </p>
+      <p class="text-xs tracking-[0.25em] uppercase pl-2 mt-2" style="color:#9A927F;">— The Pahal Team</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TIMELINE ================= -->
+<section class="relative px-6 sm:px-10 lg:px-20 py-24 sm:py-32" style="background:var(--cream-deep);">
+  <div class="max-w-5xl mx-auto text-center mb-16 reveal">
+    <p class="tracking-[0.3em] text-xs uppercase mb-4" style="color:var(--rose)">Day In Review</p>
+    <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl">The thread of one afternoon</h2>
+  </div>
+
+  <div class="max-w-4xl mx-auto relative">
+    <div class="thread-line absolute left-6 sm:left-1/2 top-0 bottom-0 sm:-translate-x-1/2"></div>
+
+    <!-- Milestone 1 -->
+    <div class="relative pl-16 sm:pl-0 mb-16 sm:mb-24 reveal">
+      <div class="hidden sm:flex absolute left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-[color:var(--saffron)] node-ring items-center justify-center z-10">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 12L9 18L21 6" stroke="#FBF7EF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="absolute left-0 sm:hidden w-9 h-9 rounded-full bg-[color:var(--saffron)] flex items-center justify-center node-ring">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M7 12L11 16L18 8" stroke="#FBF7EF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="sm:w-1/2 sm:pr-14">
+        <div class="bg-cream rounded-2xl shadow-lg shadow-black/5 p-6 sm:p-8 border border-black/5">
+          <p class="text-xs tracking-widest uppercase mb-2" style="color:var(--saffron);">Chapter One</p>
+          <h3 class="font-display text-xl sm:text-2xl mb-3">The Arrival &amp; Welcome</h3>
+          <p class="text-sm leading-relaxed" style="color:#4A5273;">Our team stepped through the gates to a chorus of hellos, handmade name tags, and a warmth that made the morning feel instantly familiar.</p>
+          <div class="mt-5 aspect-video rounded-xl bg-[color:var(--cream-deep)] flex items-center justify-center text-xs tracking-widest uppercase" style="color:#B0A990;">Event Photo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Milestone 2 -->
+    <div class="relative pl-16 sm:pl-0 mb-16 sm:mb-24 reveal">
+      <div class="hidden sm:flex absolute left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-[color:var(--saffron)] node-ring items-center justify-center z-10">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 7H4a1 1 0 00-1 1v3h18V8a1 1 0 00-1-1z" stroke="#FBF7EF" stroke-width="1.8"/><path d="M4 11h16v8a1 1 0 01-1 1H5a1 1 0 01-1-1v-8z" stroke="#FBF7EF" stroke-width="1.8"/><path d="M12 7v13M12 7c-1.5 0-3-1-3-2.5S10.3 2 12 3.2 15 4.5 15 4.5 13.5 7 12 7z" stroke="#FBF7EF" stroke-width="1.4"/></svg>
+      </div>
+      <div class="absolute left-0 sm:hidden w-9 h-9 rounded-full bg-[color:var(--saffron)] flex items-center justify-center node-ring">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 9h16v10a1 1 0 01-1 1H5a1 1 0 01-1-1V9z" stroke="#FBF7EF" stroke-width="1.6"/><path d="M12 9v11" stroke="#FBF7EF" stroke-width="1.4"/></svg>
+      </div>
+      <div class="sm:ml-auto sm:w-1/2 sm:pl-14">
+        <div class="bg-cream rounded-2xl shadow-lg shadow-black/5 p-6 sm:p-8 border border-black/5">
+          <p class="text-xs tracking-widest uppercase mb-2" style="color:var(--saffron);">Chapter Two</p>
+          <h3 class="font-display text-xl sm:text-2xl mb-3">The Donation Ceremony</h3>
+          <p class="text-sm leading-relaxed" style="color:#4A5273;">A quiet, proud moment — essentials, learning materials, and resources handed over, not as charity, but as a promise of continued support.</p>
+          <div class="mt-5 aspect-video rounded-xl bg-[color:var(--cream-deep)] flex items-center justify-center text-xs tracking-widest uppercase" style="color:#B0A990;">Event Photo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Milestone 3 -->
+    <div class="relative pl-16 sm:pl-0 mb-16 sm:mb-24 reveal">
+      <div class="hidden sm:flex absolute left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-[color:var(--saffron)] node-ring items-center justify-center z-10">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3a2.5 2.5 0 012.5 2.5c0 .9-.4 1.5-1 2h3a2.5 2.5 0 010 5h-.5v3a2.5 2.5 0 01-5 0c0-.6.2-1.1.5-1.5" stroke="#FBF7EF" stroke-width="1.5"/><path d="M12 3a2.5 2.5 0 00-2.5 2.5c0 .9.4 1.5 1 2h-3a2.5 2.5 0 000 5h.5v3a2.5 2.5 0 005 0" stroke="#FBF7EF" stroke-width="1.5"/></svg>
+      </div>
+      <div class="absolute left-0 sm:hidden w-9 h-9 rounded-full bg-[color:var(--saffron)] flex items-center justify-center node-ring">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="7" stroke="#FBF7EF" stroke-width="1.6"/><path d="M9 12h6M12 9v6" stroke="#FBF7EF" stroke-width="1.6"/></svg>
+      </div>
+      <div class="sm:w-1/2 sm:pr-14">
+        <div class="bg-cream rounded-2xl shadow-lg shadow-black/5 p-6 sm:p-8 border border-black/5">
+          <p class="text-xs tracking-widest uppercase mb-2" style="color:var(--saffron);">Chapter Three</p>
+          <h3 class="font-display text-xl sm:text-2xl mb-3">Inclusive Fun &amp; Games</h3>
+          <p class="text-sm leading-relaxed" style="color:#4A5273;">Balloons, music, and games designed so every child could win in their own way — the loudest, longest laughter of the entire day.</p>
+          <div class="mt-5 aspect-video rounded-xl bg-[color:var(--cream-deep)] flex items-center justify-center text-xs tracking-widest uppercase" style="color:#B0A990;">Event Photo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Milestone 4 -->
+    <div class="relative pl-16 sm:pl-0 reveal">
+      <div class="hidden sm:flex absolute left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-[color:var(--saffron)] node-ring items-center justify-center z-10">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.5" stroke="#FBF7EF" stroke-width="1.6"/><path d="M12 3v2.2M12 18.8V21M4.2 12H6.4M17.6 12h2.2M6.3 6.3l1.5 1.5M16.2 16.2l1.5 1.5M6.3 17.7l1.5-1.5M16.2 7.8l1.5-1.5" stroke="#FBF7EF" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </div>
+      <div class="absolute left-0 sm:hidden w-9 h-9 rounded-full bg-[color:var(--saffron)] flex items-center justify-center node-ring">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="#FBF7EF" stroke-width="1.5"/></svg>
+      </div>
+      <div class="sm:ml-auto sm:w-1/2 sm:pl-14">
+        <div class="bg-cream rounded-2xl shadow-lg shadow-black/5 p-6 sm:p-8 border border-black/5">
+          <p class="text-xs tracking-widest uppercase mb-2" style="color:var(--saffron);">Chapter Four</p>
+          <h3 class="font-display text-xl sm:text-2xl mb-3">The Final Smiles &amp; Farewells</h3>
+          <p class="text-sm leading-relaxed" style="color:#4A5273;">Small hands waving from the gate, a few tears we didn't expect, and a shared promise: this wasn't goodbye, just "until next time."</p>
+          <div class="mt-5 aspect-video rounded-xl bg-[color:var(--cream-deep)] flex items-center justify-center text-xs tracking-widest uppercase" style="color:#B0A990;">Event Photo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= IMPACT METRICS ================= -->
+<section class="relative px-6 sm:px-10 lg:px-20 py-24 sm:py-28" style="background:var(--ink); color:var(--cream);">
+  <div class="max-w-5xl mx-auto text-center mb-16 reveal">
+    <p class="tracking-[0.3em] text-xs uppercase mb-4" style="color:var(--saffron-soft);">In Numbers, Briefly</p>
+    <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl">A small beginning, measured</h2>
+  </div>
+
+  <div class="max-w-5xl mx-auto grid sm:grid-cols-3 gap-12 sm:gap-8 text-center">
+    <div class="reveal">
+      <p class="font-display text-6xl sm:text-7xl mb-3" style="color:var(--saffron);">1</p>
+      <div class="w-10 h-[2px] mx-auto mb-4" style="background:var(--rose);"></div>
+      <p class="text-sm sm:text-base tracking-wide" style="color:#D8D2C4;">Unforgettable Day</p>
+    </div>
+    <div class="reveal">
+      <p class="font-display text-6xl sm:text-7xl mb-3" style="color:var(--saffron);">50+</p>
+      <div class="w-10 h-[2px] mx-auto mb-4" style="background:var(--rose);"></div>
+      <p class="text-sm sm:text-base tracking-wide" style="color:#D8D2C4;">Pure Smiles Created</p>
+    </div>
+    <div class="reveal">
+      <p class="font-display text-6xl sm:text-7xl mb-3" style="color:var(--saffron);">100%</p>
+      <div class="w-10 h-[2px] mx-auto mb-4" style="background:var(--rose);"></div>
+      <p class="text-sm sm:text-base tracking-wide" style="color:#D8D2C4;">Core Memories Formed</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA / FOOTER ================= -->
+<footer class="relative px-6 sm:px-10 lg:px-20 py-24 sm:py-28 overflow-hidden" style="background:var(--ink-deep); color:var(--cream);">
+  <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full opacity-10" style="background:var(--saffron);"></div>
+
+  <div class="relative max-w-3xl mx-auto text-center reveal">
+    <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl mb-5">Keep the momentum going</h2>
+    <p class="text-sm sm:text-base mb-10 max-w-xl mx-auto" style="color:#C7C1B2;">
+      PAHAL was our first step, not our last. Join the mailing list to hear about our next experiment,
+      and where we choose to show up next.
+    </p>
+
+    <form id="joinForm" class="glass rounded-2xl p-3 sm:p-4 flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+      <label for="email" class="sr-only">Email address</label>
+      <input id="email" name="email" type="email" required placeholder="your@email.com"
+        class="flex-1 bg-transparent px-4 py-3 rounded-xl text-sm placeholder:text-cream/50 text-cream border border-cream/20 focus:border-[color:var(--saffron)]" />
+      <button type="submit" class="px-6 py-3 rounded-xl text-sm font-medium tracking-wide" style="background:var(--saffron); color:var(--ink-deep);">
+        Join the Movement
+      </button>
+    </form>
+    <p id="joinMsg" class="text-xs mt-4 tracking-wide" style="color:var(--saffron-soft); min-height:1rem;"></p>
+  </div>
+
+  <div class="relative max-w-5xl mx-auto mt-20 pt-8 flex flex-col sm:flex-row items-center justify-between gap-6" style="border-top:1px solid rgba(251,247,239,0.12);">
+    <p class="text-xs tracking-wide" style="color:#8D8779;">&copy; 2026 The Rotary Circle. All rights reserved.</p>
+    <div class="flex items-center gap-5">
+      <a href="#" aria-label="Instagram" class="opacity-70 hover:opacity-100 transition-opacity">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="#FBF7EF" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="#FBF7EF" stroke-width="1.5"/><circle cx="17.2" cy="6.8" r="1" fill="#FBF7EF"/></svg>
+      </a>
+      <a href="#" aria-label="X" class="opacity-70 hover:opacity-100 transition-opacity">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 4l16 16M20 4L4 20" stroke="#FBF7EF" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </a>
+      <a href="#" aria-label="Facebook" class="opacity-70 hover:opacity-100 transition-opacity">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M14 9h2.5V6H14c-1.7 0-3 1.3-3 3v2H9v3h2v6h3v-6h2.2l.8-3H14V9z" stroke="#FBF7EF" stroke-width="1.3" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal, .underline-swipe');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Newsletter form (front-end only)
+  const form = document.getElementById('joinForm');
+  const msg = document.getElementById('joinMsg');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    if(email){
+      msg.textContent = "Thank you — you're part of the next chapter.";
+      form.reset();
+    }
+  });
+</script>
+
+</body>
+</html>
